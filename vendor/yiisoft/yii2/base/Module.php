@@ -133,6 +133,8 @@ class Module extends ServiceLocator
      */
     public function __construct($id, $parent = null, $config = [])
     {
+        Yii::testProcess(__METHOD__);
+
         $this->id = $id;
         $this->module = $parent;
         parent::__construct($config);
@@ -146,6 +148,8 @@ class Module extends ServiceLocator
      */
     public static function getInstance()
     {
+        Yii::testProcess(__METHOD__);
+
         $class = get_called_class();
         return isset(Yii::$app->loadedModules[$class]) ? Yii::$app->loadedModules[$class] : null;
     }
@@ -157,6 +161,8 @@ class Module extends ServiceLocator
      */
     public static function setInstance($instance)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($instance === null) {
             unset(Yii::$app->loadedModules[get_called_class()]);
         } else {
@@ -175,6 +181,8 @@ class Module extends ServiceLocator
      */
     public function init()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->controllerNamespace === null) {
             $class = get_class($this);
             if (($pos = strrpos($class, '\\')) !== false) {
@@ -190,6 +198,8 @@ class Module extends ServiceLocator
      */
     public function getUniqueId()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->module ? ltrim($this->module->getUniqueId() . '/' . $this->id, '/') : $this->id;
     }
 
@@ -200,6 +210,8 @@ class Module extends ServiceLocator
      */
     public function getBasePath()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_basePath === null) {
             $class = new \ReflectionClass($this);
             $this->_basePath = dirname($class->getFileName());
@@ -216,6 +228,8 @@ class Module extends ServiceLocator
      */
     public function setBasePath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         $path = Yii::getAlias($path);
         $p = realpath($path);
         if ($p !== false && is_dir($p)) {
@@ -234,6 +248,8 @@ class Module extends ServiceLocator
      */
     public function getControllerPath()
     {
+        Yii::testProcess(__METHOD__);
+
         return Yii::getAlias('@' . str_replace('\\', '/', $this->controllerNamespace));
     }
 
@@ -243,6 +259,8 @@ class Module extends ServiceLocator
      */
     public function getViewPath()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_viewPath !== null) {
             return $this->_viewPath;
         } else {
@@ -257,6 +275,8 @@ class Module extends ServiceLocator
      */
     public function setViewPath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_viewPath = Yii::getAlias($path);
     }
 
@@ -266,6 +286,8 @@ class Module extends ServiceLocator
      */
     public function getLayoutPath()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_layoutPath !== null) {
             return $this->_layoutPath;
         } else {
@@ -280,6 +302,8 @@ class Module extends ServiceLocator
      */
     public function setLayoutPath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_layoutPath = Yii::getAlias($path);
     }
 
@@ -303,6 +327,8 @@ class Module extends ServiceLocator
      */
     public function setAliases($aliases)
     {
+        Yii::testProcess(__METHOD__);
+
         foreach ($aliases as $name => $alias) {
             Yii::setAlias($name, $alias);
         }
@@ -317,6 +343,8 @@ class Module extends ServiceLocator
      */
     public function hasModule($id)
     {
+        Yii::testProcess(__METHOD__);
+
         if (($pos = strpos($id, '/')) !== false) {
             // sub-module
             $module = $this->getModule(substr($id, 0, $pos));
@@ -338,6 +366,8 @@ class Module extends ServiceLocator
      */
     public function getModule($id, $load = true)
     {
+        Yii::testProcess(__METHOD__);
+
         if (($pos = strpos($id, '/')) !== false) {
             // sub-module
             $module = $this->getModule(substr($id, 0, $pos));
@@ -373,6 +403,8 @@ class Module extends ServiceLocator
      */
     public function setModule($id, $module)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($module === null) {
             unset($this->_modules[$id]);
         } else {
@@ -389,6 +421,8 @@ class Module extends ServiceLocator
      */
     public function getModules($loadedOnly = false)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($loadedOnly) {
             $modules = [];
             foreach ($this->_modules as $module) {
@@ -429,6 +463,8 @@ class Module extends ServiceLocator
      */
     public function setModules($modules)
     {
+        Yii::testProcess(__METHOD__);
+
         foreach ($modules as $id => $module) {
             $this->_modules[$id] = $module;
         }
@@ -446,6 +482,8 @@ class Module extends ServiceLocator
      */
     public function runAction($route, $params = [])
     {
+        Yii::testProcess(__METHOD__);
+
         $parts = $this->createController($route);
         if (is_array($parts)) {
             /* @var $controller Controller */
@@ -486,6 +524,8 @@ class Module extends ServiceLocator
      */
     public function createController($route)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($route === '') {
             $route = $this->defaultRoute;
         }
@@ -542,6 +582,8 @@ class Module extends ServiceLocator
      */
     public function createControllerByID($id)
     {
+        Yii::testProcess(__METHOD__);
+
         $pos = strrpos($id, '/');
         if ($pos === false) {
             $prefix = '';
@@ -598,6 +640,8 @@ class Module extends ServiceLocator
      */
     public function beforeAction($action)
     {
+        Yii::testProcess(__METHOD__);
+
         $event = new ActionEvent($action);
         $this->trigger(self::EVENT_BEFORE_ACTION, $event);
         return $event->isValid;
@@ -626,6 +670,8 @@ class Module extends ServiceLocator
      */
     public function afterAction($action, $result)
     {
+        Yii::testProcess(__METHOD__);
+
         $event = new ActionEvent($action);
         $event->result = $result;
         $this->trigger(self::EVENT_AFTER_ACTION, $event);

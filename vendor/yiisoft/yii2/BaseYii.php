@@ -533,4 +533,19 @@ class BaseYii
     {
         return get_object_vars($object);
     }
+
+    /**
+     * Trace a message of __METHOD__ if YII_DEBUG_YB is true.
+     * YII_DEBUG_YB is used in learning process.
+     * Yuan Bo. 2015.01.31
+     * @param string __METHOD__ of the current method
+     * @param string what message should be traced
+     */
+    public static function testProcess($caller,$msg = 'testProcess')
+    {
+        if(YII_DEBUG_YB) {
+            static::trace($msg,$caller);
+        }
+    }
+
 }

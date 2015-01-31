@@ -56,6 +56,8 @@ class Application extends \yii\base\Application
      */
     protected function bootstrap()
     {
+        Yii::testProcess(__METHOD__);
+        
         $request = $this->getRequest();
         Yii::setAlias('@webroot', dirname($request->getScriptFile()));
         Yii::setAlias('@web', $request->getBaseUrl());
@@ -71,6 +73,8 @@ class Application extends \yii\base\Application
      */
     public function handleRequest($request)
     {
+        Yii::testProcess(__METHOD__);
+
         if (empty($this->catchAll)) {
             list ($route, $params) = $request->resolve();
         } else {
@@ -103,6 +107,8 @@ class Application extends \yii\base\Application
      */
     public function getHomeUrl()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_homeUrl === null) {
             if ($this->getUrlManager()->showScriptName) {
                 return $this->getRequest()->getScriptUrl();
@@ -119,6 +125,8 @@ class Application extends \yii\base\Application
      */
     public function setHomeUrl($value)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_homeUrl = $value;
     }
 
@@ -128,6 +136,8 @@ class Application extends \yii\base\Application
      */
     public function getSession()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('session');
     }
 
@@ -137,6 +147,8 @@ class Application extends \yii\base\Application
      */
     public function getUser()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('user');
     }
 
@@ -145,6 +157,8 @@ class Application extends \yii\base\Application
      */
     public function coreComponents()
     {
+        Yii::testProcess(__METHOD__);
+
         return array_merge(parent::coreComponents(), [
             'request' => ['class' => 'yii\web\Request'],
             'response' => ['class' => 'yii\web\Response'],

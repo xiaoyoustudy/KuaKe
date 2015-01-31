@@ -124,6 +124,8 @@ class Component extends Object
      */
     public function __get($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             // read property, e.g. getName()
@@ -163,6 +165,8 @@ class Component extends Object
      */
     public function __set($name, $value)
     {
+        Yii::testProcess(__METHOD__);
+
         $setter = 'set' . $name;
         if (method_exists($this, $setter)) {
             // set property
@@ -212,6 +216,8 @@ class Component extends Object
      */
     public function __isset($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             return $this->$getter() !== null;
@@ -241,6 +247,8 @@ class Component extends Object
      */
     public function __unset($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $setter = 'set' . $name;
         if (method_exists($this, $setter)) {
             $this->$setter(null);
@@ -273,6 +281,8 @@ class Component extends Object
      */
     public function __call($name, $params)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         foreach ($this->_behaviors as $object) {
             if ($object->hasMethod($name)) {
@@ -288,6 +298,8 @@ class Component extends Object
      */
     public function __clone()
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_events = [];
         $this->_behaviors = null;
     }
@@ -310,6 +322,8 @@ class Component extends Object
      */
     public function hasProperty($name, $checkVars = true, $checkBehaviors = true)
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->canGetProperty($name, $checkVars, $checkBehaviors) || $this->canSetProperty($name, false, $checkBehaviors);
     }
 
@@ -330,6 +344,8 @@ class Component extends Object
      */
     public function canGetProperty($name, $checkVars = true, $checkBehaviors = true)
     {
+        Yii::testProcess(__METHOD__);
+
         if (method_exists($this, 'get' . $name) || $checkVars && property_exists($this, $name)) {
             return true;
         } elseif ($checkBehaviors) {
@@ -360,6 +376,8 @@ class Component extends Object
      */
     public function canSetProperty($name, $checkVars = true, $checkBehaviors = true)
     {
+        Yii::testProcess(__METHOD__);
+
         if (method_exists($this, 'set' . $name) || $checkVars && property_exists($this, $name)) {
             return true;
         } elseif ($checkBehaviors) {
@@ -386,6 +404,8 @@ class Component extends Object
      */
     public function hasMethod($name, $checkBehaviors = true)
     {
+        Yii::testProcess(__METHOD__);
+
         if (method_exists($this, $name)) {
             return true;
         } elseif ($checkBehaviors) {
@@ -427,6 +447,8 @@ class Component extends Object
      */
     public function behaviors()
     {
+        Yii::testProcess(__METHOD__);
+
         return [];
     }
 
@@ -437,6 +459,8 @@ class Component extends Object
      */
     public function hasEventHandlers($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         return !empty($this->_events[$name]) || Event::hasHandlers($this, $name);
     }
@@ -473,6 +497,8 @@ class Component extends Object
      */
     public function on($name, $handler, $data = null, $append = true)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         if ($append || empty($this->_events[$name])) {
             $this->_events[$name][] = [$handler, $data];
@@ -492,6 +518,8 @@ class Component extends Object
      */
     public function off($name, $handler = null)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         if (empty($this->_events[$name])) {
             return false;
@@ -523,6 +551,8 @@ class Component extends Object
      */
     public function trigger($name, Event $event = null)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         if (!empty($this->_events[$name])) {
             if ($event === null) {
@@ -553,6 +583,8 @@ class Component extends Object
      */
     public function getBehavior($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         return isset($this->_behaviors[$name]) ? $this->_behaviors[$name] : null;
     }
@@ -563,6 +595,8 @@ class Component extends Object
      */
     public function getBehaviors()
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         return $this->_behaviors;
     }
@@ -584,6 +618,8 @@ class Component extends Object
      */
     public function attachBehavior($name, $behavior)
     {
+        //Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         return $this->attachBehaviorInternal($name, $behavior);
     }
@@ -597,6 +633,8 @@ class Component extends Object
      */
     public function attachBehaviors($behaviors)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         foreach ($behaviors as $name => $behavior) {
             $this->attachBehaviorInternal($name, $behavior);
@@ -611,6 +649,8 @@ class Component extends Object
      */
     public function detachBehavior($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         if (isset($this->_behaviors[$name])) {
             $behavior = $this->_behaviors[$name];
@@ -627,6 +667,8 @@ class Component extends Object
      */
     public function detachBehaviors()
     {
+        Yii::testProcess(__METHOD__);
+
         $this->ensureBehaviors();
         foreach ($this->_behaviors as $name => $behavior) {
             $this->detachBehavior($name);
@@ -638,6 +680,8 @@ class Component extends Object
      */
     public function ensureBehaviors()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_behaviors === null) {
             $this->_behaviors = [];
             foreach ($this->behaviors() as $name => $behavior) {
@@ -656,6 +700,8 @@ class Component extends Object
      */
     private function attachBehaviorInternal($name, $behavior)
     {
+        Yii::testProcess(__METHOD__);
+
         if (!($behavior instanceof Behavior)) {
             $behavior = Yii::createObject($behavior);
         }

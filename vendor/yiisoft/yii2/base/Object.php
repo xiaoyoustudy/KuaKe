@@ -82,6 +82,8 @@ class Object
      */
     public static function className()
     {
+        //Yii::testProcess(__METHOD__);
+
         return get_called_class();
     }
 
@@ -101,6 +103,11 @@ class Object
      */
     public function __construct($config = [])
     {
+        /** fatal error will occur when use this method here. WHY??
+         * Fatal error: Call to a member function get() on null in H:\GitHub\KuaKe\vendor\yiisoft\yii2\BaseYii.php on line 340
+        */
+        //Yii::testProcess(__METHOD__);
+
         if (!empty($config)) {
             Yii::configure($this, $config);
         }
@@ -114,6 +121,10 @@ class Object
      */
     public function init()
     {
+        /** fatal error will occur when use this method here. WHY??
+         * Fatal error: Call to a member function get() on null in H:\GitHub\KuaKe\vendor\yiisoft\yii2\BaseYii.php on line 340
+        */
+        //Yii::testProcess(__METHOD__);
     }
 
     /**
@@ -129,6 +140,8 @@ class Object
      */
     public function __get($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             return $this->$getter();
@@ -152,6 +165,8 @@ class Object
      */
     public function __set($name, $value)
     {
+        Yii::testProcess(__METHOD__);
+
         $setter = 'set' . $name;
         if (method_exists($this, $setter)) {
             $this->$setter($value);
@@ -174,6 +189,8 @@ class Object
      */
     public function __isset($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             return $this->$getter() !== null;
@@ -195,6 +212,8 @@ class Object
      */
     public function __unset($name)
     {
+        Yii::testProcess(__METHOD__);
+
         $setter = 'set' . $name;
         if (method_exists($this, $setter)) {
             $this->$setter(null);
@@ -215,6 +234,8 @@ class Object
      */
     public function __call($name, $params)
     {
+        Yii::testProcess(__METHOD__);
+
         throw new UnknownMethodException('Calling unknown method: ' . get_class($this) . "::$name()");
     }
 
@@ -234,6 +255,8 @@ class Object
      */
     public function hasProperty($name, $checkVars = true)
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->canGetProperty($name, $checkVars) || $this->canSetProperty($name, false);
     }
 
@@ -252,6 +275,8 @@ class Object
      */
     public function canGetProperty($name, $checkVars = true)
     {
+        Yii::testProcess(__METHOD__);
+
         return method_exists($this, 'get' . $name) || $checkVars && property_exists($this, $name);
     }
 
@@ -270,6 +295,8 @@ class Object
      */
     public function canSetProperty($name, $checkVars = true)
     {
+        Yii::testProcess(__METHOD__);
+
         return method_exists($this, 'set' . $name) || $checkVars && property_exists($this, $name);
     }
 
@@ -283,6 +310,8 @@ class Object
      */
     public function hasMethod($name)
     {
+        Yii::testProcess(__METHOD__);
+
         return method_exists($this, $name);
     }
 }
