@@ -67,6 +67,8 @@ class ServiceLocator extends Component
      */
     public function __get($name)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->has($name)) {
             return $this->get($name);
         } else {
@@ -82,6 +84,8 @@ class ServiceLocator extends Component
      */
     public function __isset($name)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->has($name, true)) {
             return true;
         } else {
@@ -105,6 +109,8 @@ class ServiceLocator extends Component
      */
     public function has($id, $checkInstance = false)
     {
+        Yii::testProcess(__METHOD__);
+
         return $checkInstance ? isset($this->_components[$id]) : isset($this->_definitions[$id]);
     }
 
@@ -121,6 +127,8 @@ class ServiceLocator extends Component
      */
     public function get($id, $throwException = true)
     {
+        Yii::testProcess(__METHOD__);
+
         if (isset($this->_components[$id])) {
             return $this->_components[$id];
         }
@@ -184,6 +192,8 @@ class ServiceLocator extends Component
      */
     public function set($id, $definition)
     {
+        Yii::testProcess(__METHOD__,'Set component:' . $id);
+
         if ($definition === null) {
             unset($this->_components[$id], $this->_definitions[$id]);
             return;
@@ -212,6 +222,8 @@ class ServiceLocator extends Component
      */
     public function clear($id)
     {
+        Yii::testProcess(__METHOD__);
+
         unset($this->_definitions[$id], $this->_components[$id]);
     }
 
@@ -222,6 +234,8 @@ class ServiceLocator extends Component
      */
     public function getComponents($returnDefinitions = true)
     {
+        Yii::testProcess(__METHOD__);
+
         return $returnDefinitions ? $this->_definitions : $this->_components;
     }
 
@@ -254,6 +268,8 @@ class ServiceLocator extends Component
      */
     public function setComponents($components)
     {
+        Yii::testProcess(__METHOD__);
+
         foreach ($components as $id => $component) {
             $this->set($id, $component);
         }

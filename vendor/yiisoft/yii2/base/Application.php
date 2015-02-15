@@ -194,6 +194,8 @@ abstract class Application extends Module
      */
     public function __construct($config = [])
     {
+        Yii::testProcess(__METHOD__);
+
         Yii::$app = $this;
         $this->setInstance($this);
 
@@ -216,6 +218,8 @@ abstract class Application extends Module
      */
     public function preInit(&$config)
     {
+        Yii::testProcess(__METHOD__);
+
         if (!isset($config['id'])) {
             throw new InvalidConfigException('The "id" configuration for the Application is required.');
         }
@@ -263,6 +267,8 @@ abstract class Application extends Module
      */
     public function init()
     {
+        Yii::testProcess(__METHOD__);
+
         $this->state = self::STATE_INIT;
         $this->bootstrap();
     }
@@ -274,6 +280,8 @@ abstract class Application extends Module
      */
     protected function bootstrap()
     {
+        //Yii::testProcess(__METHOD__);
+
         if ($this->extensions === null) {
             $file = Yii::getAlias('@vendor/yiisoft/extensions.php');
             $this->extensions = is_file($file) ? include($file) : [];
@@ -325,6 +333,8 @@ abstract class Application extends Module
      */
     protected function registerErrorHandler(&$config)
     {
+        Yii::testProcess(__METHOD__);
+
         if (YII_ENABLE_ERROR_HANDLER) {
             if (!isset($config['components']['errorHandler']['class'])) {
                 echo "Error: no errorHandler component is configured.\n";
@@ -343,6 +353,8 @@ abstract class Application extends Module
      */
     public function getUniqueId()
     {
+        Yii::testProcess(__METHOD__);
+
         return '';
     }
 
@@ -355,6 +367,8 @@ abstract class Application extends Module
      */
     public function setBasePath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         parent::setBasePath($path);
         Yii::setAlias('@app', $this->getBasePath());
     }
@@ -366,6 +380,8 @@ abstract class Application extends Module
      */
     public function run()
     {
+        Yii::testProcess(__METHOD__);
+
         try {
 
             $this->state = self::STATE_BEFORE_REQUEST;
@@ -412,6 +428,8 @@ abstract class Application extends Module
      */
     public function getRuntimePath()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_runtimePath === null) {
             $this->setRuntimePath($this->getBasePath() . DIRECTORY_SEPARATOR . 'runtime');
         }
@@ -425,6 +443,8 @@ abstract class Application extends Module
      */
     public function setRuntimePath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_runtimePath = Yii::getAlias($path);
         Yii::setAlias('@runtime', $this->_runtimePath);
     }
@@ -438,6 +458,8 @@ abstract class Application extends Module
      */
     public function getVendorPath()
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->_vendorPath === null) {
             $this->setVendorPath($this->getBasePath() . DIRECTORY_SEPARATOR . 'vendor');
         }
@@ -451,6 +473,8 @@ abstract class Application extends Module
      */
     public function setVendorPath($path)
     {
+        Yii::testProcess(__METHOD__);
+
         $this->_vendorPath = Yii::getAlias($path);
         Yii::setAlias('@vendor', $this->_vendorPath);
         Yii::setAlias('@bower', $this->_vendorPath . DIRECTORY_SEPARATOR . 'bower');
@@ -467,6 +491,8 @@ abstract class Application extends Module
      */
     public function getTimeZone()
     {
+        Yii::testProcess(__METHOD__);
+
         return date_default_timezone_get();
     }
 
@@ -479,6 +505,8 @@ abstract class Application extends Module
      */
     public function setTimeZone($value)
     {
+        Yii::testProcess(__METHOD__);
+
         date_default_timezone_set($value);
     }
 
@@ -488,6 +516,8 @@ abstract class Application extends Module
      */
     public function getDb()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('db');
     }
 
@@ -497,6 +527,8 @@ abstract class Application extends Module
      */
     public function getLog()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('log');
     }
 
@@ -506,6 +538,8 @@ abstract class Application extends Module
      */
     public function getErrorHandler()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('errorHandler');
     }
 
@@ -515,6 +549,8 @@ abstract class Application extends Module
      */
     public function getCache()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('cache', false);
     }
 
@@ -524,6 +560,8 @@ abstract class Application extends Module
      */
     public function getFormatter()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('formatter');
     }
 
@@ -533,6 +571,8 @@ abstract class Application extends Module
      */
     public function getRequest()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('request');
     }
 
@@ -542,6 +582,8 @@ abstract class Application extends Module
      */
     public function getResponse()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('response');
     }
 
@@ -551,6 +593,8 @@ abstract class Application extends Module
      */
     public function getView()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('view');
     }
 
@@ -560,6 +604,8 @@ abstract class Application extends Module
      */
     public function getUrlManager()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('urlManager');
     }
 
@@ -569,6 +615,8 @@ abstract class Application extends Module
      */
     public function getI18n()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('i18n');
     }
 
@@ -578,6 +626,8 @@ abstract class Application extends Module
      */
     public function getMailer()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('mailer');
     }
 
@@ -588,6 +638,8 @@ abstract class Application extends Module
      */
     public function getAuthManager()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('authManager', false);
     }
 
@@ -597,6 +649,8 @@ abstract class Application extends Module
      */
     public function getAssetManager()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('assetManager');
     }
 
@@ -606,6 +660,8 @@ abstract class Application extends Module
      */
     public function getSecurity()
     {
+        Yii::testProcess(__METHOD__);
+
         return $this->get('security');
     }
 
@@ -615,6 +671,8 @@ abstract class Application extends Module
      */
     public function coreComponents()
     {
+        Yii::testProcess(__METHOD__);
+
         return [
             'log' => ['class' => 'yii\log\Dispatcher'],
             'view' => ['class' => 'yii\web\View'],
@@ -637,6 +695,8 @@ abstract class Application extends Module
      */
     public function end($status = 0, $response = null)
     {
+        Yii::testProcess(__METHOD__);
+
         if ($this->state === self::STATE_BEFORE_REQUEST || $this->state === self::STATE_HANDLING_REQUEST) {
             $this->state = self::STATE_AFTER_REQUEST;
             $this->trigger(self::EVENT_AFTER_REQUEST);
